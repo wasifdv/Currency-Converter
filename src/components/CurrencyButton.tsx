@@ -1,6 +1,7 @@
-import React, {JSXElementConstructor} from 'react';
-import {PropsWithChildren} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import React from 'react';
+import type { PropsWithChildren } from 'react';
+
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 
 type CurrencyButtonProps = PropsWithChildren<{
   name: string;
@@ -8,26 +9,31 @@ type CurrencyButtonProps = PropsWithChildren<{
 }>;
 
 const CurrencyButton = (props: CurrencyButtonProps): JSX.Element => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <View style={styles.buttonContainer}>
-      <Text style={styles.flag}>props.flag</Text>
-      <Text style={styles.country}>props.name</Text>
+      <Text style={styles.flag}>{props.flag}</Text>
+      <Text style={[styles.country, { color: isDarkMode ? '#FFFFFF' : '#2d3436' }]}>
+        {props.name}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    alignItems:'center'
+    alignItems: 'center',
   },
   flag: {
-    fontSize:28,
-    color:'#ffffff',
-    marginBottom:4
+    fontSize: 28,
+    color: '#FFFFFF', // Flag stays white in both modes
+    marginBottom: 4,
   },
   country: {
-    fontSize:14,
-    color:'#2d3436',
+    fontSize: 14,
+    color: '#2d3436', // Default color for light mode
   },
 });
+
 export default CurrencyButton;
